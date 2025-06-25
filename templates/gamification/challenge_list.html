@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block title %}Challenges List{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Available Challenges</h1>
+        <a href="{% url 'challenges_form' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Create Challenge
+        </a>
+    </div>
+    <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                <a href="?sort=name{% if request.GET.sort == 'name' and request.GET.direction != 'desc' %}&direction=desc{% endif %}"
+                   class="text-dark text-decoration-none">Name {% if request.GET.sort == 'name' %}
+                    <i class="bi bi-arrow-{% if request.GET.direction == 'desc' %}down{% else %}up{% endif %}"></i>{% endif %}
+                </a></th>
+            <th>
+                <a href="?sort=description{% if request.GET.sort == 'description' and request.GET.direction != 'desc' %}&direction=desc{% endif %}"
+                   class="text-dark text-decoration-none">Description {% if request.GET.sort == 'description' %}
+                    <i class="bi bi-arrow-{% if request.GET.direction == 'desc' %}down{% else %}up{% endif %}"></i>{% endif %}
+                </a></th>
+            <th>
+                <a href="?sort=type{% if request.GET.sort == 'type' and request.GET.direction != 'desc' %}&direction=desc{% endif %}"
+                   class="text-dark text-decoration-none">Type {% if request.GET.sort == 'type' %}
+                    <i class="bi bi-arrow-{% if request.GET.direction == 'desc' %}down{% else %}up{% endif %}"></i>{% endif %}
+                </a></th>
+            <th>
+                <a href="?sort=points{% if request.GET.sort == 'points' and request.GET.direction != 'desc' %}&direction=desc{% endif %}"
+                   class="text-dark text-decoration-none">Points {% if request.GET.sort == 'points' %}
+                    <i class="bi bi-arrow-{% if request.GET.direction == 'desc' %}down{% else %}up{% endif %}"></i>{% endif %}
+                </a></th>
+            <th>
+                <a href="?sort=period{% if request.GET.sort == 'period' and request.GET.direction != 'desc' %}&direction=desc{% endif %}"
+                   class="text-dark text-decoration-none">Period {% if request.GET.sort == 'period' %}
+                    <i class="bi bi-arrow-{% if request.GET.direction == 'desc' %}down{% else %}up{% endif %}"></i>{% endif %}
+                </a></th>
+            <th>
+                <a href="?sort=start_date{% if request.GET.sort == 'start_date' and request.GET.direction != 'desc' %}&direction=desc{% endif %}"
+                   class="text-dark text-decoration-none">Start Date {% if request.GET.sort == 'start_date' %}
+                    <i class="bi bi-arrow-{% if request.GET.direction == 'desc' %}down{% else %}up{% endif %}"></i>{% endif %}
+                </a></th>
+            <th>
+                <a href="?sort=end_date{% if request.GET.sort == 'end_date' and request.GET.direction != 'desc' %}&direction=desc{% endif %}"
+                   class="text-dark text-decoration-none">End Date {% if request.GET.sort == 'end_date' %}
+                    <i class="bi bi-arrow-{% if request.GET.direction == 'desc' %}down{% else %}up{% endif %}"></i>{% endif %}
+                </a></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for challenge in object_list %}
+            <tr>
+            <td colspan="7" class="p-0">
+                    <a href="{% url 'challenges_details' challenge.id %}" class="text-decoration-none text-dark d-block">
+                        <div class="d-flex">
+                            <div class="p-2 flex-grow-1" style="width: 14.28%">{{ challenge.name }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 14.28%">{{ challenge.description }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 14.28%">{{ challenge.get_type_display }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 14.28%">{{ challenge.points }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 14.28%">{{ challenge.get_period_display }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 14.28%">{{ challenge.start_date }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 14.28%">{{ challenge.end_date }}</div>
+                        </div>
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+            <td colspan="7" class="text-center">No challenges available at this time.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

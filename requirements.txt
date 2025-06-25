@@ -1,0 +1,9 @@
+Django~=5.2.3
+djangorestframework
+markdown
+django-filter
+Pillow
+django-cors-headers
+requests
+dotenv
+openai
