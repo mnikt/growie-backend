@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}Lista Quizów{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Utworzone quizy</h1>
+        <a href="{% url 'quizzes_form' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Stwórz Quiz
+        </a>
+    </div>
+    <table class="table table-hover">
+    <thead>
+        <tr>
+            <th style="width: 33%">Dzień</th>
+            <th style="width: 33%">Pytanie</th>
+            <th style="width: 34%">Punkty</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in object_list %}
+            <tr>
+                <td colspan="4" class="p-0">
+                    <a href="{% url 'quizzes_details' event.id %}" class="text-decoration-none text-dark d-block">
+                        <div class="d-flex">
+                            <div class="p-2 flex-grow-1" style="width: 33%">{{ event.date }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 33%">{{ event.question }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 34%">{{ event.points }}</div>
+                        </div>
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">Nie ma utworzonych quizów.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

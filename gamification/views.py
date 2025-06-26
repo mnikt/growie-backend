@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from gamification.auth import UserAuthentication
-from gamification.models import Challenge, User, ChallengeUser, QuizAnswer, Event
+from gamification.models import Challenge, User, ChallengeUser, QuizAnswer, Event, Quiz
 from gamification.serializers import ChallengeSerializer
 
 
@@ -140,6 +140,29 @@ class EventsUpdateView(UpdateView):
     def get_success_url(self):
         return f'/gamification/events/details/{self.object.pk}'
 
+
+class QuizListView(ListView):
+    model = Quiz
+    ordering = ['-date']
+
+
+class QuizCreateView(CreateView):
+    model = Quiz
+    fields = '__all__'
+    success_url = '/gamification/quizzes'
+
+
+class QuizDetailsView(DetailView):
+    model = Quiz
+    fields = '__all__'
+
+
+class QuizUpdateView(UpdateView):
+    model = Quiz
+    fields = '__all__'
+
+    def get_success_url(self):
+        return f'/gamification/quizzes/details/{self.object.pk}'
 
 # class ChallengesListApiView(ListAPIView):
 #     authentication_classes = [UserAuthentication]

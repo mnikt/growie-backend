@@ -15,6 +15,10 @@ urlpatterns = [
     path('events', views.EventListView.as_view(), name='events'),
     path('events/form', views.EventCreateView.as_view(), name='events_form'),
     path('events/details/<int:pk>', views.EventsDetailsView.as_view(), name='events_details'),
-    path('events/update/<int:pk>', views.EventsUpdateView.as_view(), name='events_update')
+    path('events/update/<int:pk>', views.EventsUpdateView.as_view(), name='events_update'),
+    path('quizzes', views.QuizListView.as_view(), name='quizzes'),
+    path('quizzes/form', views.QuizCreateView.as_view(), name='quizzes_form'),
+    path('quizzes/details/<int:pk>', views.QuizDetailsView.as_view(), name='quizzes_details'),
+    path('quizzes/update/<int:pk>', views.QuizUpdateView.as_view(), name='quizzes_update')
 ]
 

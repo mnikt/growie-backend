@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block title %}Stwórz quiz{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mb-4">Stwórz quiz</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="question" class="form-label">Pytanie</label>
+                <input type="text" class="form-control {% if form.question.errors %}is-invalid{% endif %}" id="question"
+                       name="question" value="{{ form.question.value|default:'' }}" required>
+                {% if form.name.errors %}
+                    <div class="invalid-feedback">{{ form.name.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="answer_a" class="form-label">Odpowiedź A</label>
+                <input type="text" class="form-control {% if form.answer_a.errors %}is-invalid{% endif %}" id="answer_a"
+                       name="answer_a" value="{{ form.answer_a.value|default:'' }}" required>
+                {% if form.answer_a.errors %}
+                    <div class="invalid-feedback">{{ form.answer_a.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="answer_b" class="form-label">Odpowiedź B</label>
+                <input type="text" class="form-control {% if form.answer_b.errors %}is-invalid{% endif %}" id="answer_b"
+                       name="answer_b" value="{{ form.answer_b.value|default:'' }}" required>
+                {% if form.answer_b.errors %}
+                    <div class="invalid-feedback">{{ form.answer_b.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="answer_c" class="form-label">Odpowiedź C</label>
+                <input type="text" class="form-control {% if form.answer_c.errors %}is-invalid{% endif %}" id="answer_c"
+                       name="answer_c" value="{{ form.answer_c.value|default:'' }}" required>
+                {% if form.answer_c.errors %}
+                    <div class="invalid-feedback">{{ form.answer_c.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="points" class="form-label">Punkty</label>
+                <input type="number" class="form-control {% if form.points.errors %}is-invalid{% endif %}" id="points"
+                       name="points" value="{{ form.points.value|default:'' }}" required>
+                {% if form.points.errors %}
+                    <div class="invalid-feedback">{{ form.points.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="correct_answer" class="form-label">Poprawna odpowiedź</label>
+                <select class="form-control {% if form.correct_answer.errors %}is-invalid{% endif %}"
+                        id="correct_answer"
+                        name="correct_answer" required>
+                    <option value="">Wybierz odpowiedź</option>
+                    <option value="a" {% if form.correct_answer.value == 'a' %}selected{% endif %}>A</option>
+                    <option value="b" {% if form.correct_answer.value == 'b' %}selected{% endif %}>B</option>
+                    <option value="c" {% if form.correct_answer.value == 'c' %}selected{% endif %}>C</option>
+                </select>
+                {% if form.correct_answer.errors %}
+                    <div class="invalid-feedback">{{ form.correct_answer.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label">Data</label>
+                <input type="date" class="form-control {% if form.date.errors %}is-invalid{% endif %}"
+                       id="date" name="date" value="{{ form.date.value|date:'Y-m-d'|default:'' }}"
+                       required>
+                {% if form.date.errors %}
+                    <div class="invalid-feedback">{{ form.date.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}Szczegóły Quizu{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">Codzienny Quiz {{ quiz.date|date:"d E Y" }}</h1>
+            <a href="{% url 'quizzes_update' quiz.pk %}" class="btn btn-primary">
+                <i class="bi bi-pencil-square"></i> Edytuj
+            </a>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <h5 class="card-title">Pytanie</h5>
+                    <p class="card-text">{{ quiz.question }}</p>
+                </div>
+                <div class="mb-4">
+                    <h5>Odpowiedzi:</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2 {% if quiz.correct_answer == 'a' %}text-success{% endif %}">
+                            <strong>A:</strong> {{ quiz.answer_a }}</li>
+                        <li class="mb-2 {% if quiz.correct_answer == 'b' %}text-success{% endif %}">
+                            <strong>B:</strong> {{ quiz.answer_b }}</li>
+                        <li class="mb-2 {% if quiz.correct_answer == 'c' %}text-success{% endif %}">
+                            <strong>C:</strong> {{ quiz.answer_c }}</li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Punkty: {{ quiz.points }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
