@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block title %}Lista wydarzeń{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Dostępne Wydarzenia</h1>
+        <a href="{% url 'events_form' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Stwórz wydarzenie
+        </a>
+    </div>
+    <table class="table table-hover">
+    <thead>
+        <tr>
+            <th style="width: 25%">Nazwa</th>
+            <th style="width: 25%">Opis</th>
+            <th style="width: 25%">Limit miejsc</th>
+            <th style="width: 25%">Data</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in object_list %}
+            <tr>
+                <td colspan="4" class="p-0">
+                    <a href="{% url 'events_details' event.id %}" class="text-decoration-none text-dark d-block">
+                        <div class="d-flex">
+                            <div class="p-2 flex-grow-1" style="width: 25%">{{ event.name }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 25%">{{ event.description }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 25%">{{ event.limit }}</div>
+                            <div class="p-2 flex-grow-1" style="width: 25%">{{ event.date }}</div>
+                        </div>
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">Nie ma dostępnych wydarzeń.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

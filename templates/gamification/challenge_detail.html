@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 
-{% block title %}{{ challenge.name }} - Challenge Details{% endblock %}
+{% block title %}{{ challenge.name }} - Szczegóły Wyzwania{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="mb-0">{{ challenge.name }}</h1>
             <a href="{% url 'challenges_update' challenge.pk %}" class="btn btn-primary">
-                <i class="bi bi-pencil-square"></i> Edit
+                <i class="bi bi-pencil-square"></i> Edytuj
             </a>
         </div>
         <div class="card">
@@ -17,31 +17,31 @@
             {% endif %}
             <div class="card-body">
                 <div class="mb-3">
-                    <h5 class="card-title">Description</h5>
+                    <h5 class="card-title">Opis</h5>
                     <p class="card-text">{{ challenge.description }}</p>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <h5>Challenge Details</h5>
+                        <h5>Szczegóły wyzwania</h5>
                         <ul class="list-unstyled">
-                            <li><strong>Points:</strong> {{ challenge.points }}</li>
-                            <li><strong>Period:</strong>
-                                {% if challenge.period == 0 %}One time
-                                {% elif challenge.period == 1 %}Daily
-                                {% elif challenge.period == 2 %}Weekly
-                                {% else %}Monthly{% endif %}
+                            <li><strong>Punkty:</strong> {{ challenge.points }}</li>
+                            <li><strong>Okres:</strong>
+                                {% if challenge.period == 0 %}Jednorazowy
+                                {% elif challenge.period == 1 %}Dzienny
+                                {% elif challenge.period == 2 %}Tygoniowy
+                                {% else %}Miesięczny{% endif %}
                             </li>
                             <li><strong>Type:</strong>
-                                {% if challenge.type == 0 %}QR Code
-                                {% else %}Entrance{% endif %}
+                                {% if challenge.type == 0 %}Kod QR
+                                {% else %}Wejście{% endif %}
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <h5>Duration</h5>
+                        <h5>Czas trwania</h5>
                         <ul class="list-unstyled">
-                            <li><strong>Start Date:</strong> {{ challenge.start_date|date:"F d, Y" }}</li>
-                            <li><strong>End Date:</strong> {{ challenge.end_date|date:"F d, Y" }}</li>
+                            <li><strong>Start:</strong> {{ challenge.start_date|date:"F d, Y" }}</li>
+                            <li><strong>Koniec:</strong> {{ challenge.end_date|date:"F d, Y" }}</li>
                         </ul>
                     </div>
                     <div class="col-12 d-flex justify-content-center mt-4">
@@ -58,7 +58,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             {% if challenge.type == 0 %}
                 new QRCode(document.getElementById("qrcode"), {
-                    text: window.location.href,
+                    text: "Growie challenge {{ challenge.id }} claim",
                     width: 256,
                     height: 256
                 });

@@ -1,16 +1,21 @@
 from django.db import models
 
-# Create your models here.
+
+class User(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+
+
 class Challenge(models.Model):
     class Period(models.IntegerChoices):
-        ONETIME = 0, 'One Time'
-        DAILY = 1, 'Daily'
-        WEEKLY = 2, 'Weekly'
-        MONTHLY = 3, 'Monthly'
+        ONETIME = 0, 'Jednorazowe'
+        DAILY = 1, 'Dzienne'
+        WEEKLY = 2, 'Tygodniowe'
+        MONTHLY = 3, 'Miesięczne'
 
     class Type(models.IntegerChoices):
-        QR_CODE = 0, 'QR Code'
-        ENTRANCE = 1, 'Entrance'
+        QR_CODE = 0, 'Kod QR'
+        ENTRANCE = 1, 'Wejście'
 
     name = models.CharField(max_length=200)
     description = models.TextField()
@@ -20,8 +25,45 @@ class Challenge(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     image = models.ImageField(upload_to='challenges')
-    joined = models.BooleanField(default=False)
-    completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return f'Wyzwanie {self.name}'
+
+
+class ChallengeUser(models.Model):
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    completed = models.BooleanField(default=False)
+
+
+class Quiz(models.Model):
+    question = models.CharField(max_length=200)
+    answer_a = models.CharField(max_length=200)
+    answer_b = models.CharField(max_length=200)
+    answer_c = models.CharField(max_length=200)
+    correct_answer = models.CharField(max_length=1)
+    date = models.DateField()
+    points = models.IntegerField()
+
+
+class QuizAnswer(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Codzienny quiz {self.quiz.date}"
+
+
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    date = models.DateField()
+    image = models.ImageField(upload_to='events')
+    limit = models.IntegerField()
+
+
+class EventUser(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

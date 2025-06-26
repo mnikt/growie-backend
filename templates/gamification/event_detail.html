@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ event.name }} - Szczegóły Wydarzenia{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">{{ event.name }}</h1>
+            <a href="{% url 'events_update' event.pk %}" class="btn btn-primary">
+                <i class="bi bi-pencil-square"></i> Edytuj
+            </a>
+        </div>
+        <div class="card">
+            {% if event.image %}
+                <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.name }}"
+                     style="max-height: 300px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+                <div class="mb-3">
+                    <h5 class="card-title">Opis</h5>
+                    <p class="card-text">{{ event.description }}</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Szczegóły wydarzenia</h5>
+                        <ul class="list-unstyled">
+                            <li><strong>Limit miejsc:</strong> {{ event.limit }}</li>
+                            <li><strong>Data:</strong> {{ event.date|date:"d E Y" }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

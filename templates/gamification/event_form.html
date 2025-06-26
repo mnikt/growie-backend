@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% block title %}Stwórz wydarzenie{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mb-4">Stwórz wydarzenie</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Nazwa wydarzenia</label>
+                <input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" id="name"
+                       name="name" value="{{ form.name.value|default:'' }}" required>
+                {% if form.name.errors %}
+                    <div class="invalid-feedback">{{ form.name.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="limit" class="form-label">Limit miejsc</label>
+                <input type="number" class="form-control {% if form.limit.errors %}is-invalid{% endif %}" id="limit"
+                       name="limit" value="{{ form.limit.value|default:'' }}" required>
+                {% if form.limit.errors %}
+                    <div class="invalid-feedback">{{ form.limit.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Data</label>
+                <input type="date" class="form-control {% if form.date.errors %}is-invalid{% endif %}"
+                       id="date" name="date" value="{{ form.date.value|date:'Y-m-d'|default:'' }}"
+                       required>
+                {% if form.date.errors %}
+                    <div class="invalid-feedback">{{ form.date.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Obrazek</label>
+                <input type="file" class="form-control {% if form.image.errors %}is-invalid{% endif %}" id="image"
+                       name="image">
+                {% if form.image.errors %}
+                    <div class="invalid-feedback">{{ form.image.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Opis</label>
+                <textarea class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="description"
+                          name="description" rows="3" required>{{ form.description.value|default:'' }}</textarea>
+                {% if form.description.errors %}
+                    <div class="invalid-feedback">{{ form.description.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+        </form>
+    </div>
+{% endblock %}

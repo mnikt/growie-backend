@@ -1,14 +1,14 @@
 {% extends 'layout.html' %}
 
-{% block title %}Create Challenge{% endblock %}
+{% block title %}Stwórz wyzwanie{% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1 class="mb-4">Create New Challenge</h1>
+        <h1 class="mb-4">Stwórz wyzwanie</h1>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="name" class="form-label">Challenge Name</label>
+                <label for="name" class="form-label">Nazwa wyzwania</label>
                 <input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" id="name"
                        name="name" value="{{ form.name.value|default:'' }}" required>
                 {% if form.name.errors %}
@@ -16,20 +16,20 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                <label for="period" class="form-label">Challenge Period</label>
+                <label for="period" class="form-label">Okres wyzwania</label>
                 <select class="form-select {% if form.period.errors %}is-invalid{% endif %}" id="period" name="period"
                         required>
-                    <option value="0" {% if form.period.value == 0 %}selected{% endif %}>One time</option>
-                    <option value="1" {% if form.period.value == 1 %}selected{% endif %}>Daily</option>
-                    <option value="2" {% if form.period.value == 2 %}selected{% endif %}>Weekly</option>
-                    <option value="3" {% if form.period.value == 3 %}selected{% endif %}>Monthly</option>
+                    <option value="0" {% if form.period.value == 0 %}selected{% endif %}>Jednorazowy</option>
+                    <option value="1" {% if form.period.value == 1 %}selected{% endif %}>Dzienny</option>
+                    <option value="2" {% if form.period.value == 2 %}selected{% endif %}>Tygodniowy</option>
+                    <option value="3" {% if form.period.value == 3 %}selected{% endif %}>Miesięczny</option>
                 </select>
                 {% if form.period.errors %}
                     <div class="invalid-feedback">{{ form.period.errors.0 }}</div>
                 {% endif %}
             </div>
             <div class="mb-3">
-                <label for="points" class="form-label">Points</label>
+                <label for="points" class="form-label">Punkty</label>
                 <input type="number" class="form-control {% if form.points.errors %}is-invalid{% endif %}" id="points"
                        name="points" value="{{ form.points.value|default:'' }}" required>
                 {% if form.points.errors %}
@@ -37,7 +37,7 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                <label for="start_date" class="form-label">Start Date</label>
+                <label for="start_date" class="form-label">Data rozpoczęcia</label>
                 <input type="date" class="form-control {% if form.start_date.errors %}is-invalid{% endif %}"
                        id="start_date" name="start_date" value="{{ form.start_date.value|date:'Y-m-d'|default:'' }}"
                        required>
@@ -46,7 +46,7 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                <label for="end_date" class="form-label">End Date</label>
+                <label for="end_date" class="form-label">Data zakończenia</label>
                 <input type="date" class="form-control {% if form.end_date.errors %}is-invalid{% endif %}" id="end_date"
                        name="end_date" value="{{ form.end_date.value|date:'Y-m-d'|default:'' }}" required>
                 {% if form.end_date.errors %}
@@ -54,7 +54,7 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                <label for="image" class="form-label">Challenge Image</label>
+                <label for="image" class="form-label">Obrazek</label>
                 <input type="file" class="form-control {% if form.image.errors %}is-invalid{% endif %}" id="image"
                        name="image">
                 {% if form.image.errors %}
@@ -62,7 +62,7 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
+                <label for="description" class="form-label">Opis</label>
                 <textarea class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="description"
                           name="description" rows="3" required>{{ form.description.value|default:'' }}</textarea>
                 {% if form.description.errors %}
@@ -70,17 +70,17 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                <label for="type" class="form-label">Challenge Type</label>
+                <label for="type" class="form-label">Typ wyzwania</label>
                 <select class="form-select {% if form.type.errors %}is-invalid{% endif %}" id="type" name="type"
                         required>
-                    <option value="0" {% if form.type.value == 0 %}selected{% endif %}>QR Code</option>
-                    <option value="1" {% if form.type.value == 1 %}selected{% endif %}>Entrance</option>
+                    <option value="0" {% if form.type.value == 0 %}selected{% endif %}>Kod QR</option>
+                    <option value="1" {% if form.type.value == 1 %}selected{% endif %}>Wejście</option>
                 </select>
                 {% if form.type.errors %}
                     <div class="invalid-feedback">{{ form.type.errors.0 }}</div>
                 {% endif %}
             </div>
-            <button type="submit" class="btn btn-primary">Create Challenge</button>
+            <button type="submit" class="btn btn-primary">Zapisz</button>
         </form>
     </div>
 {% endblock %}
