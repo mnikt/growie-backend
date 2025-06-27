@@ -1,6 +1,5 @@
 import json
 
-from django.db.models import Sum
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -8,10 +7,11 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.utils import timezone
 
 from gamification.auth import UserAuthentication
-from gamification.models import Challenge, User, ChallengeUser, QuizAnswer, Event, Quiz
-from gamification.serializers import ChallengeSerializer
+from gamification.models import Challenge, User, ChallengeUser, QuizAnswer, Event, Quiz, EventUser
+from gamification.serializers import ChallengeSerializer, EventSerializer, QuizSerializer
 
 
 @csrf_exempt
@@ -164,26 +164,54 @@ class QuizUpdateView(UpdateView):
     def get_success_url(self):
         return f'/gamification/quizzes/details/{self.object.pk}'
 
-# class ChallengesListApiView(ListAPIView):
-#     authentication_classes = [UserAuthentication]
-#
-#     queryset = Challenge.objects.all()
-#     serializer_class = ChallengeSerializer
-#
-#
-# class ChallengesDetailsApiView(RetrieveAPIView):
-#     authentication_classes = [UserAuthentication]
-#
-#     queryset = Challenge.objects.all()
-#     serializer_class = ChallengeSerializer
-#
-#
-# class ChallengesJoinApiView(APIView):
-#     authentication_classes = [UserAuthentication]
-#
-#     def post(self, request, pk):
-#         if ChallengeUser.objects.filter(challenge_id=pk, user=request.user).exists():
-#             return Response(status=400)
-#         else:
-#             ChallengeUser(challenge_id=pk, user=request.user).save()
-#             return Response(status=200)
+
+class EventsListApiView(ListAPIView):
+    authentication_classes = [UserAuthentication]
+
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
+class EventsDetailsApiView(RetrieveAPIView):
+    authentication_classes = [UserAuthentication]
+
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
+class EventsJoinApiView(APIView):
+    authentication_classes = [UserAuthentication]
+
+    def post(self, request, pk):
+        try:
+            if EventUser.objects.filter(event_id=pk).count() < Event.objects.get(pk=pk).limit:
+                EventUser.objects.get_or_create(event_id=pk, user=request.user)
+                return Response(status=200)
+        except Event.DoesNotExist:
+            return Response(status=404)
+        return Response(status=400)
+
+
+class QuizListApiView(ListAPIView):
+    authentication_classes = [UserAuthentication]
+
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
+    
+    def filter_queryset(self, queryset):
+        return queryset.filter(date=timezone.now().date())
+
+
+class QuizAnswerApiView(APIView):
+    authentication_classes = [UserAuthentication]
+
+    def post(self, request, pk):
+        try:
+            quiz = Quiz.objects.get(pk=pk)
+            if QuizAnswer.objects.filter(quiz=quiz, user=request.user).exists():
+                return Response(status=400)
+            correct = quiz.correct_answer == request.data['answer']
+            QuizAnswer.objects.create(quiz=quiz, user=request.user, correct=correct)
+            return Response(status=200, data={"correct": correct})
+        except Quiz.DoesNotExist:
+            return Response(status=404)

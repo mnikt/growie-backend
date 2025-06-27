@@ -16,9 +16,13 @@ urlpatterns = [
     path('events/form', views.EventCreateView.as_view(), name='events_form'),
     path('events/details/<int:pk>', views.EventsDetailsView.as_view(), name='events_details'),
     path('events/update/<int:pk>', views.EventsUpdateView.as_view(), name='events_update'),
+    path('events/api', views.EventsListApiView.as_view(), name='events_api_get'),
+    path('events/api/<int:pk>', views.EventsDetailsApiView.as_view(), name='events_api_details'),
+    path('events/api/<int:pk>/join', views.EventsJoinApiView.as_view(), name='events_api_join'),
     path('quizzes', views.QuizListView.as_view(), name='quizzes'),
     path('quizzes/form', views.QuizCreateView.as_view(), name='quizzes_form'),
     path('quizzes/details/<int:pk>', views.QuizDetailsView.as_view(), name='quizzes_details'),
-    path('quizzes/update/<int:pk>', views.QuizUpdateView.as_view(), name='quizzes_update')
+    path('quizzes/update/<int:pk>', views.QuizUpdateView.as_view(), name='quizzes_update'),
+    path('quizzes/api', views.QuizListApiView.as_view(), name='quizzes_api'),
+    path('quizzes/api/<int:pk>/answer', views.QuizAnswerApiView.as_view(), name='quizzes_api_answer')
 ]
-

@@ -46,14 +46,14 @@ class Quiz(models.Model):
     date = models.DateField()
     points = models.IntegerField()
 
+    def __str__(self):
+        return f"Codzienny quiz"
+
 
 class QuizAnswer(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     correct = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"Codzienny quiz {self.quiz.date}"
 
 
 class Event(models.Model):
