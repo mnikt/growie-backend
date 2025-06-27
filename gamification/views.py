@@ -1,5 +1,6 @@
 import json
 
+from django.db.models import Sum
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -215,3 +216,24 @@ class QuizAnswerApiView(APIView):
             return Response(status=200, data={"correct": correct})
         except Quiz.DoesNotExist:
             return Response(status=404)
+
+
+class RankingView(APIView):
+    authentication_classes = [UserAuthentication]
+
+    @staticmethod
+    def get_users_points(user):
+        quizzes_points = QuizAnswer.objects.filter(correct=True, user=user).aggregate(sum=Sum('quiz__points'))['sum'] or 0
+        challenges_points = ChallengeUser.objects.filter(completed=True, user=user).aggregate(sum=Sum('challenge__points'))['sum'] or 0
+        return quizzes_points + challenges_points
+
+    def get(self, request):
+        data = [{
+            'id': user.id,
+            'name': user.name,
+            'points': self.get_users_points(user)
+            } for user in User.objects.all()
+        ]
+
+        data.sort(key=lambda x: x['points'], reverse=True)
+        return Response(data)

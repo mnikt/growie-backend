@@ -24,5 +24,6 @@ urlpatterns = [
     path('quizzes/details/<int:pk>', views.QuizDetailsView.as_view(), name='quizzes_details'),
     path('quizzes/update/<int:pk>', views.QuizUpdateView.as_view(), name='quizzes_update'),
     path('quizzes/api', views.QuizListApiView.as_view(), name='quizzes_api'),
-    path('quizzes/api/<int:pk>/answer', views.QuizAnswerApiView.as_view(), name='quizzes_api_answer')
+    path('quizzes/api/<int:pk>/answer', views.QuizAnswerApiView.as_view(), name='quizzes_api_answer'),
+    path('ranking/api', views.RankingView.as_view(), name='ranking_api_answer')
 ]

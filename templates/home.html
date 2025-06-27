@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+
+{% block scripts %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="text-center mb-2">
+        <img src="/media/growie_logo.png" alt="Growie Logo" class="home-logo">
+    </div>
+    <div class="container d-flex flex-row position-relative">
+        <div class="admin-section col-6">
+            <h2>Panel Administratora</h2>
+            <div class="admin-buttons">
+                <a href="{% url 'challenges' %}" class="btn btn-primary"><i class="fas fa-trophy"></i> Wyzwania</a>
+                <a href="{% url 'events' %}" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Wydarzenia</a>
+                <a href="{% url 'quizzes' %}" class="btn btn-primary"><i class="fas fa-question-circle"></i> Quizy</a>
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div class="mobile-section col-6">
+            <h2>Aplikacja Mobilna</h2>
+            <div class="download-buttons">
+                <a href="/static/app.apk" class="btn btn-success download-btn">
+                    <i class="fab fa-android"></i> Pobierz na Androida
+                </a>
+{#                <a href="/static/app.ipa" class="btn btn-primary download-btn">#}
+{#                    <i class="fab fa-apple"></i> Pobierz na iOS#}
+{#                </a>#}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .home-logo {
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .admin-section, .mobile-section {
+            margin: 10px 0;
+            padding: 20px;
+            border: none;
+        }
+
+        .separator {
+            position: absolute;
+            left: 50%;
+            top: 10%;
+            bottom: 10%;
+            width: 1px;
+            background-color: #ddd;
+        }
+
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .admin-buttons .btn, .download-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            transition: transform 0.2s;
+        }
+
+        .admin-buttons .btn:hover, .download-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+    </style>
+{% endblock %}

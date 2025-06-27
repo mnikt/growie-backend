@@ -18,10 +18,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from scaner.views import smart_scan
+from growie_django.views import home
 
 urlpatterns = [
     path('gamification/', include('gamification.urls')),
     path('scaner/', smart_scan),
+    path('', home),
 ]
 
 if settings.DEBUG:
