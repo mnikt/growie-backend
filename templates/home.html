@@ -19,9 +19,10 @@
         </div>
         <div class="separator"></div>
         <div class="mobile-section col-6 text-center">
+            {% load static %}
             <h2>Aplikacja Mobilna</h2>
             <div class="download-buttons">
-                <a href="/static/growie.apk" class="btn btn-success download-btn">
+                <a href="{% static 'growie.apk' %}" class="btn btn-success download-btn">
                     <i class="fab fa-android"></i> Pobierz na Androida
                 </a>
 {#                <a href="/static/app.ipa" class="btn btn-primary download-btn">#}
