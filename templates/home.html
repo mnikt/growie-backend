@@ -8,9 +8,9 @@
     <div class="text-center mb-2">
         <img src="/media/growie_logo.png" alt="Growie Logo" class="home-logo">
     </div>
-    <div class="container d-flex flex-row position-relative justify-content-center">
-    <div class="admin-section col-6 text-center">
-            <h2>Panel Administratora</h2>
+    <div class="container d-flex flex-row flex-wrap position-relative justify-content-center">
+        <div class="admin-section col-md-6 col-12 text-center d-none d-md-block">
+        <h2>Panel Administratora</h2>
             <div class="admin-buttons">
                 <a href="{% url 'challenges' %}" class="btn btn-primary"><i class="fas fa-trophy"></i> Wyzwania</a>
                 <a href="{% url 'events' %}" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Wydarzenia</a>
@@ -18,8 +18,8 @@
             </div>
         </div>
         <div class="separator"></div>
-        <div class="mobile-section col-6 text-center">
-            {% load static %}
+        <div class="mobile-section col-md-6 col-12 text-center">
+        {% load static %}
             <h2>Aplikacja Mobilna</h2>
             <div class="download-buttons">
                 <a href="{% static 'growie.apk' %}" class="btn btn-success download-btn">
@@ -34,8 +34,14 @@
 
     <style>
         .home-logo {
-            max-width: 300px;
+            max-width: 80%;
             margin: 20px auto;
+        }
+
+        @media (min-width: 768px) {
+            .home-logo {
+                max-width: 300px;
+            }
         }
 
         .container {
@@ -55,6 +61,13 @@
             bottom: 10%;
             width: 1px;
             background-color: #ddd;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .separator {
+                display: block;
+            }
         }
 
         .admin-buttons {

@@ -19,8 +19,13 @@
 </head>
 <body>
 <div class="d-flex min-vh-100">
-    <nav class="bg-light p-4 shadow-sm position-sticky top-0 h-100" style="width: 240px;">
-        <a href="/" class="text-decoration-none d-block mb-5">
+    <button class="btn btn-primary d-md-none position-fixed" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#mobileNav" style="top: 10px; left: 10px; z-index: 1000;">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <nav class="bg-light p-4 shadow-sm position-sticky top-0 h-100 d-none d-md-block" style="width: 240px;">
+    <a href="/" class="text-decoration-none d-block mb-5">
             <img src="/media/growie_logo.png" alt="Growie Logo" class="nav-logo" style="max-width: 180px;">
         </a>
         <div class="nav flex-column gap-3">
@@ -38,6 +43,29 @@
             </a>
         </div>
     </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileNav">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="nav flex-column gap-3">
+                <a href="{% url 'challenges' %}"
+                   class="nav-link text-dark {% if request.resolver_match.url_name == 'challenges' %}active fw-bold{% endif %} hover-highlight">
+                    <i class="bi bi-trophy me-2"></i>Wyzwania
+                </a>
+                <a href="{% url 'events' %}"
+                   class="nav-link text-dark {% if request.resolver_match.url_name == 'events' %}active fw-bold{% endif %} hover-highlight">
+                    <i class="bi bi-calendar-event me-2"></i>Wydarzenia
+                </a>
+                <a href="{% url 'quizzes' %}"
+                   class="nav-link text-dark {% if request.resolver_match.url_name == 'quizzes' %}active fw-bold{% endif %} hover-highlight">
+                    <i class="bi bi-book me-2"></i>Quizy
+                </a>
+            </div>
+        </div>
+    </div>
 
     <main style="flex: 1; padding: 20px;">
     {% block content %}
