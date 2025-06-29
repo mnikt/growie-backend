@@ -67,3 +67,8 @@ class Event(models.Model):
 class EventUser(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Pets(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='pets')

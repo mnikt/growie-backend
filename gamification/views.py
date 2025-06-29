@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from django.utils import timezone
 
 from gamification.auth import UserAuthentication
-from gamification.models import Challenge, User, ChallengeUser, QuizAnswer, Event, Quiz, EventUser
+from gamification.models import Challenge, User, ChallengeUser, QuizAnswer, Event, Quiz, EventUser, Pets
 from gamification.serializers import ChallengeSerializer, EventSerializer, QuizSerializer
 
 
@@ -71,6 +71,9 @@ class ChallengesListApiView(ListAPIView):
     queryset = Challenge.objects.all()
     serializer_class = ChallengeSerializer
 
+    def filter_queryset(self, queryset):
+        return queryset.filter(end_date__gte=timezone.now().date(), start_date__lte=timezone.now().date())
+
 
 class ChallengesDetailsApiView(RetrieveAPIView):
     authentication_classes = [UserAuthentication]
@@ -84,10 +87,10 @@ class ChallengesJoinApiView(APIView):
 
     def post(self, request, pk):
         if ChallengeUser.objects.filter(challenge_id=pk, user=request.user).exists():
-            return Response(status=400)
+            return Response(status=400, data={"joined": True})
         else:
             ChallengeUser(challenge_id=pk, user=request.user).save()
-            return Response(status=200)
+            return Response(status=200, data={"joined": True})
 
 
 class ChallengesCompleteApiView(APIView):
@@ -99,8 +102,8 @@ class ChallengesCompleteApiView(APIView):
             challenge.completed = True
             challenge.save()
         except ChallengeUser.DoesNotExist:
-            return Response(status=404)
-        return Response(status=200)
+            return Response(status=404, data={'error': 'Challenge not found'})
+        return Response(status=200, data={'completed': True})
 
 
 class PointsApiView(APIView):
@@ -187,10 +190,10 @@ class EventsJoinApiView(APIView):
         try:
             if EventUser.objects.filter(event_id=pk).count() < Event.objects.get(pk=pk).limit:
                 EventUser.objects.get_or_create(event_id=pk, user=request.user)
-                return Response(status=200)
+                return Response(status=200, data={"joined": True})
         except Event.DoesNotExist:
-            return Response(status=404)
-        return Response(status=400)
+            return Response(status=404, data={"error": "Event not found"})
+        return Response(status=400, data={"joined": False})
 
 
 class QuizListApiView(ListAPIView):
@@ -210,12 +213,12 @@ class QuizAnswerApiView(APIView):
         try:
             quiz = Quiz.objects.get(pk=pk)
             if QuizAnswer.objects.filter(quiz=quiz, user=request.user).exists():
-                return Response(status=400)
+                return Response(status=400, data={"error": "You have already answered this quiz"})
             correct = quiz.correct_answer == request.data['answer']
             QuizAnswer.objects.create(quiz=quiz, user=request.user, correct=correct)
             return Response(status=200, data={"correct": correct})
         except Quiz.DoesNotExist:
-            return Response(status=404)
+            return Response(status=404, data={"error": "Quiz not found"})
 
 
 class RankingView(APIView):
@@ -237,3 +240,27 @@ class RankingView(APIView):
 
         data.sort(key=lambda x: x['points'], reverse=True)
         return Response(data)
+
+
+class PetImageView(APIView):
+    authentication_classes = [UserAuthentication]
+
+    def get(self, request):
+        pet = Pets.objects.filter(user=request.user)
+
+        if pet.exists():
+            return Response({'image': pet.first().image.url})
+        return Response(status=404, data={'error': 'No pet found for this user'})
+
+    def post(self, request):
+        if 'image' not in request.FILES:
+            return Response(status=400)
+
+        pet = Pets.objects.filter(user=request.user).first()
+
+        if pet is None:
+            pet = Pets.objects.create(user=request.user, image=request.FILES['image'])
+        else:
+            pet.image = request.FILES['image']
+            pet.save()
+        return Response(status=200, data={'image': pet.image.url})
