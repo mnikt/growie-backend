@@ -7,6 +7,9 @@ class User(models.Model):
 
 
 class Challenge(models.Model):
+    class Meta:
+        ordering = ['start_date']
+
     class Period(models.IntegerChoices):
         ONETIME = 0, 'Jednorazowe'
         DAILY = 1, 'Codzienne'
@@ -56,6 +59,9 @@ class QuizAnswer(models.Model):
 
 
 class Event(models.Model):
+    class Meta:
+        ordering = ['date']
+
     name = models.CharField(max_length=200)
     description = models.TextField()
     date = models.DateField()
