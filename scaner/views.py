@@ -25,7 +25,7 @@ def smart_scan(request):
                     "content": [
                         {"type": "text", "text": "Określ, do jakiego śmietnika powinien trafić przedmiot znajdujący się na zdjęciu. "
                                                  "Weź pod uwagę materiał i jego zabrudzenie. "
-                                                 "Odpowiedź tylko jednym słowem: plastik, szkło, papier, elektronika, zmieszane."},
+                                                 "Odpowiedź tylko jednym słowem: plastik, szkło, papier, elektronika, biodegradowalne, zmieszane."},
                         {"type": "image_url", "image_url": {
                             "url": f"data:image/jpg;base64,{image_data}"
                         }}
