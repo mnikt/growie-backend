@@ -25,13 +25,13 @@
                         <h5>Szczegóły wyzwania</h5>
                         <ul class="list-unstyled">
                             <li><strong>Punkty:</strong> {{ challenge.points }}</li>
-                            <li><strong>Okres:</strong>
-                                {% if challenge.period == 0 %}Jednorazowy
-                                {% elif challenge.period == 1 %}Dzienny
-                                {% elif challenge.period == 2 %}Tygoniowy
-                                {% else %}Miesięczny{% endif %}
+                            <li><strong>Powtarzalność:</strong>
+                                {% if challenge.period == 0 %}Jednorazowe
+                                {% elif challenge.period == 1 %}Codzienne
+                                {% elif challenge.period == 2 %}Cotygoniowe
+                                {% else %}Comiesięczne{% endif %}
                             </li>
-                            <li><strong>Type:</strong>
+                            <li><strong>Typ potwierdzenia:</strong>
                                 {% if challenge.type == 0 %}Kod QR
                                 {% else %}Wejście{% endif %}
                             </li>

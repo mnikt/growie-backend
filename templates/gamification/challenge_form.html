@@ -16,13 +16,13 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                <label for="period" class="form-label">Okres wyzwania</label>
+                <label for="period" class="form-label">Powtarzalność</label>
                 <select class="form-select {% if form.period.errors %}is-invalid{% endif %}" id="period" name="period"
                         required>
-                    <option value="0" {% if form.period.value == 0 %}selected{% endif %}>Jednorazowy</option>
-                    <option value="1" {% if form.period.value == 1 %}selected{% endif %}>Dzienny</option>
-                    <option value="2" {% if form.period.value == 2 %}selected{% endif %}>Tygodniowy</option>
-                    <option value="3" {% if form.period.value == 3 %}selected{% endif %}>Miesięczny</option>
+                    <option value="0" {% if form.period.value == 0 %}selected{% endif %}>Jednorazowe</option>
+                    <option value="1" {% if form.period.value == 1 %}selected{% endif %}>Codzienne</option>
+                    <option value="2" {% if form.period.value == 2 %}selected{% endif %}>Cotygodniowe</option>
+                    <option value="3" {% if form.period.value == 3 %}selected{% endif %}>Comiesięczne</option>
                 </select>
                 {% if form.period.errors %}
                     <div class="invalid-feedback">{{ form.period.errors.0 }}</div>
@@ -70,11 +70,10 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                <label for="type" class="form-label">Typ wyzwania</label>
+                <label for="type" class="form-label">Typ potwierdzenia</label>
                 <select class="form-select {% if form.type.errors %}is-invalid{% endif %}" id="type" name="type"
                         required>
                     <option value="0" {% if form.type.value == 0 %}selected{% endif %}>Kod QR</option>
-                    <option value="1" {% if form.type.value == 1 %}selected{% endif %}>Wejście</option>
                 </select>
                 {% if form.type.errors %}
                     <div class="invalid-feedback">{{ form.type.errors.0 }}</div>

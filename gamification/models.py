@@ -9,13 +9,12 @@ class User(models.Model):
 class Challenge(models.Model):
     class Period(models.IntegerChoices):
         ONETIME = 0, 'Jednorazowe'
-        DAILY = 1, 'Dzienne'
-        WEEKLY = 2, 'Tygodniowe'
-        MONTHLY = 3, 'Miesięczne'
+        DAILY = 1, 'Codzienne'
+        WEEKLY = 2, 'Cotygodniowe'
+        MONTHLY = 3, 'Comiesięczne'
 
     class Type(models.IntegerChoices):
         QR_CODE = 0, 'Kod QR'
-        ENTRANCE = 1, 'Wejście'
 
     name = models.CharField(max_length=200)
     description = models.TextField()

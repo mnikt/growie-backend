@@ -24,7 +24,7 @@
                 </a></th>
             <th style="width: 14.28%">
             <a href="?sort=type{% if request.GET.sort == 'type' and request.GET.direction != 'desc' %}&direction=desc{% endif %}"
-                   class="text-dark text-decoration-none">Typ {% if request.GET.sort == 'type' %}
+                   class="text-dark text-decoration-none">Typ potwierdzenia {% if request.GET.sort == 'type' %}
                     <i class="bi bi-arrow-{% if request.GET.direction == 'desc' %}down{% else %}up{% endif %}"></i>{% endif %}
                 </a></th>
             <th style="width: 14.28%">
@@ -34,7 +34,7 @@
                 </a></th>
             <th style="width: 14.28%">
             <a href="?sort=period{% if request.GET.sort == 'period' and request.GET.direction != 'desc' %}&direction=desc{% endif %}"
-                   class="text-dark text-decoration-none">Okres {% if request.GET.sort == 'period' %}
+                   class="text-dark text-decoration-none">Powtarzalność {% if request.GET.sort == 'period' %}
                     <i class="bi bi-arrow-{% if request.GET.direction == 'desc' %}down{% else %}up{% endif %}"></i>{% endif %}
                 </a></th>
             <th style="width: 14.28%">
